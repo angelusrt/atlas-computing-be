@@ -1,0 +1,29 @@
+{
+  "name": "atlas-computing-be",
+  "version": "1.0.0",
+  "description": "atlas computing blog backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angelusrt/atlas-computing-be.git"
+  },
+  "keywords": [
+    "js",
+    "node",
+    "atlas-computing-be",
+    "atlas-computing"
+  ],
+  "author": "Angelus Rocha Trindade Garcia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/angelusrt/atlas-computing-be/issues"
+  },
+  "homepage": "https://github.com/angelusrt/atlas-computing-be#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "nodemon": "^2.0.15"
+  }
+}
