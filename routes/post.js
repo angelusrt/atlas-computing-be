@@ -2,7 +2,7 @@ import {Router as router} from "express"
 import Post from "../models/Post"
 
 //Gets Post
-router.get("/post/:postID", async(req, res) => {
+router.get("/:postID", async(req, res) => {
   try{
     //Gets post
     const post = await Post.findById(req.params.postID)

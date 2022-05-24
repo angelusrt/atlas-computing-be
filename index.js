@@ -4,6 +4,9 @@ import mongoose from "mongoose"
 import cors from "cors"
 import dotenv from "dotenv"
 
+import dev from "./routes/dev"
+import post from "./routes/post"
+
 //initiate express
 const app = express()
 
@@ -23,6 +26,8 @@ mongoose.connect(
 //Route Middleware
 app.use(express.json())
 app.use(cors())
+app.use("/api/dev", dev)
+app.use("/api/post", post)
 
 //Response
 app.get("/", (req, res) => {
