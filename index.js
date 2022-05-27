@@ -8,6 +8,7 @@ import dev from "./routes/dev"
 import post from "./routes/post"
 
 import {addDev} from "./functions/devfunc"
+import {addPost} from "./functions/postfunc"
 
 //initiate express
 const app = express()
@@ -26,6 +27,7 @@ mongoose.connect(
 )
 //Admin Functions
 //addDev
+//addPost
 
 //Route Middleware
 app.use(express.json())
