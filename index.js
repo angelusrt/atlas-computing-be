@@ -7,6 +7,8 @@ import dotenv from "dotenv"
 import dev from "./routes/dev"
 import post from "./routes/post"
 
+import {addDev} from "./functions/devfunc"
+
 //initiate express
 const app = express()
 
@@ -17,11 +19,13 @@ dotenv.config()
 mongoose.connect(
   process.env.DB_CONNECT, 
   { 
-      useNewUrlParser: true,
-      useUnifiedTopology: true 
+    useNewUrlParser: true,
+    useUnifiedTopology: true 
   },
   () => console.log("connected to db")
 )
+//Admin Functions
+//addDev
 
 //Route Middleware
 app.use(express.json())

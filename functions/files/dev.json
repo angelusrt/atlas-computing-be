@@ -1,0 +1,9 @@
+{
+  "authorName": "Nome Exemplo",
+  "authorDescription": "Isso é um exemplo de descrição",
+  "email": "nome@exemplo.com",
+  "telephone": "+5581999999999",
+  "socials": {
+    "linkedin": "https://www.linkedin.com/in/angelus-t-a7659b141/"
+  }
+}
