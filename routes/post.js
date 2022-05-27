@@ -1,5 +1,5 @@
-import {Router as router} from "express"
-import Post from "../models/Post"
+const router = require("express").Router()
+const Post = require("../models/Post.js")
 
 //Gets Post
 router.get("/:postID", async(req, res) => {
@@ -13,3 +13,5 @@ router.get("/:postID", async(req, res) => {
     res.status(400).json(err)
   }
 })
+
+module.exports = router

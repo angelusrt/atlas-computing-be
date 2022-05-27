@@ -1,14 +1,14 @@
 //Imports 
-import express from "express"
-import mongoose from "mongoose"
-import cors from "cors"
-import dotenv from "dotenv"
+const express = require("express")
+const mongoose = require("mongoose")
+const cors = require("cors")
+const dotenv = require("dotenv")
 
-import dev from "./routes/dev"
-import post from "./routes/post"
+const dev = require("./routes/dev.js")
+const post = require("./routes/post.js")
 
-import {addDev} from "./functions/devfunc"
-import {addPost} from "./functions/postfunc"
+const {addDev} = require("./functions/devfunc.js")
+const {addPost} = require("./functions/postfunc.js")
 
 //initiate express
 const app = express()

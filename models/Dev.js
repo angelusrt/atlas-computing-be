@@ -1,27 +1,26 @@
-import mongoose from "mongoose"
 const mongoose = require("mongoose")
-const { Schema } = require("mongoose")
+const { Schema } = mongoose
 
 const DevSchema = new Schema({
   authorName: {
     type: String,
     length: 32,
-    required
+    required: true 
   },
   authorDescription: {
     type: String,
     length: 64,
-    required
+    required: true
   },
   email: {
     type: String,
     length: 32,
-    required
+    required: true
   },
   telephone: {
     type: String, 
     length: 16,
-    required
+    required: true
   },
   socials: {
     linkedin: {
@@ -43,4 +42,4 @@ const DevSchema = new Schema({
   }
 })
 
-module.exports = mongoose.model('Chat', DevSchema)
+module.exports = mongoose.model('Dev', DevSchema)

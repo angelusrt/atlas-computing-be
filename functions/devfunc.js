@@ -1,5 +1,5 @@
-import Dev from "../models/Dev"
-import devData from './dev.json' /*assert {type: "json"}*/
+const Dev = require("../models/Dev.js")
+const devData = require('./files/dev.json')
 
 function addDev() {
   try{
@@ -10,4 +10,4 @@ function addDev() {
   } catch(err){ return err }
 }
 
-export {addDev}
+module.exports = {addDev}

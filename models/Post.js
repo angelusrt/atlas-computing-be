@@ -1,58 +1,57 @@
-import mongoose from "mongoose"
 const mongoose = require("mongoose")
-const { Schema, SchemaTypes } = require("mongoose")
+const { Schema, SchemaTypes } = mongoose
 
 const PostSchema = new Schema({
   date: {
     type: Date,
     default: Date.now,
-    required
+    required: true
   },
   authorID: {
     type: SchemaTypes.ObjectId,
     ref: 'Dev',
-    required
+    required: true
   },
   authorName: {
     type: String,
     length: 32,
-    required
+    required: true
   },
   authorDescription: {
     type: String,
     length: 64,
-    required
+    required: true
   },
   tags: {
     type: [String],
     length: 16,
-    required
+    required: true
   },
   title: {
     type: String,
     length: 64,
-    required
+    required: true
   },
   body: {
     section: {
       type: [{}],
-      required,
+      required: true,
       mode: {
         type: String,
-        required
+        required: true
       },
       title: {
         type: String,
         length: 32,
-        required
+        required: true
       },
       paragraphs: {
         type: [String],
         length: 256,
-        required
+        required: true
       }
     }
   }
 })
 
-module.exports = mongoose.model('Chat', PostSchema)
+module.exports = mongoose.model('Post', PostSchema)

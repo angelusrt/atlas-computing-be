@@ -1,5 +1,5 @@
-import {Router as router} from "express"
-import Dev from "../models/Dev"
+const router = require("express").Router()
+const Dev = require("../models/Dev.js")
 
 //Gets Devs
 router.get("/", async(req, res) => {
@@ -13,3 +13,5 @@ router.get("/", async(req, res) => {
     res.status(400).json(err)
   }
 })
+
+module.exports = router

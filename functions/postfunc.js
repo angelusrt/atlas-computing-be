@@ -1,9 +1,8 @@
-import Post from "../models/Post"
-import Dev from "../models/Dev"
+const Post = require("../models/Post.js")
+const Dev = require("../models/Dev.js")
+const postData = require('./files/post.json')
 
-import postData from './files/post.json' /*assert {type: "json"}*/
-
-function addPost() {
+async function addPost() {
   try{
     //Treating the data
     const user = await Dev.findById(postData.authorID)
@@ -23,4 +22,4 @@ function addPost() {
   } catch(err){ return err }
 }
 
-export {addPost}
+module.exports = {addPost}
