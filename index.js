@@ -1,4 +1,8 @@
 //Imports 
+const readline = require("readline/promises")
+const {stdin, stdout} = require("process")
+const path = require("path")
+
 const express = require("express")
 const mongoose = require("mongoose")
 const cors = require("cors")
@@ -23,11 +27,39 @@ mongoose.connect(
     useNewUrlParser: true,
     useUnifiedTopology: true 
   },
-  () => console.log("connected to db")
+  () => {
+    console.log("connected to db")
+    waitInput()
+  }
 )
+
 //Admin Functions
-//addDev
-//addPost
+async function waitInput() {
+  const r1 = readline.createInterface({input: stdin,output: stdout})
+  const answer = (await r1.question("Esperando por inputs:\n")).split(" ")  
+
+  if(answer.length == 2) {
+    switch (answer[0]) {
+      case "addDev":
+        addDev(path.join(process.cwd(), answer[1]))
+        console.log(`addDev ${path.join(process.cwd(), answer[1])}\n`)
+        waitInput()
+        break;
+      case "addPost":
+        addPost(path.join(process.cwd(), answer[1]))
+        console.log(`addPost ${path.join(process.cwd(), answer[1])}\n`)
+        waitInput()
+        break;
+      default:
+        console.log("Input invalido")
+        waitInput()
+        break;
+    }
+  } else{
+    console.log("Input invalido, argumento toma 2 entradas")
+    waitInput()
+  }
+}
 
 //Route Middleware
 app.use(express.json())

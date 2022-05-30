@@ -1,13 +1,13 @@
 const Dev = require("../models/Dev.js")
-const devData = require('./files/dev.json')
 
-function addDev() {
+function addDev(props) {
   try{
+    const devData = require(props)
     const dev = new Dev(devData)
 
     dev.save()
     console.log("Dev criado com sucesso")
-  } catch(err){ return err }
+  } catch(err){ console.log(err) }
 }
 
 module.exports = {addDev}
