@@ -1,9 +1,11 @@
 const Post = require("../models/Post.js")
 const Dev = require("../models/Dev.js")
-const postData = require('./files/post.json')
 
-async function addPost() {
+async function addPost(props) {
   try{
+    //Resolving file directory
+    const postData = require(props)
+    
     //Treating the data
     const user = await Dev.findById(postData.authorID)
     

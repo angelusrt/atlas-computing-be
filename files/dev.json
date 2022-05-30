@@ -1,0 +1,11 @@
+{
+  "authorName": "Angelus Trindade",
+  "authorDescription": "Desenvolvedor de javascript fullstack",
+  "email": "angelusrt@gmail.com",
+  "telephone": "+5581995640616",
+  "socials": {
+    "linkedin": "https://www.linkedin.com/in/angelus-t-a7659b141/",
+    "github": "https://github.com/angelusrt",
+    "portfolio": "https://angelus-portfolio.herokuapp.com/"
+  }
+}
