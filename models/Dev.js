@@ -23,22 +23,23 @@ const DevSchema = new Schema({
     required: true
   },
   socials: {
-    linkedin: {
+    type: [{}],
+    minlength: 1,
+    name: {
       type: String,
-      required: false
+      length: 16,
+      required: true
     },
-    instagram: {
+    iconName: {
       type: String,
-      required: false
+      length: 16,
+      required: true
     },
-    github: {
+    link: {
       type: String,
-      required: false
-    },
-    portfolio: {
-      type: String,
-      required: false
-    },
+      length: 64,
+      required: true
+    }
   }
 })
 

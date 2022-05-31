@@ -36,19 +36,24 @@ const PostSchema = new Schema({
     section: {
       type: [{}],
       required: true,
-      mode: {
-        type: String,
-        required: true
-      },
       title: {
         type: String,
         length: 32,
         required: true
       },
       paragraphs: {
-        type: [String],
-        length: 256,
-        required: true
+        type: [{}],
+        minlength: 1,
+        text:{
+          type: String,
+          length: 512,
+          required: true,
+        },
+        mode:{
+          type: String,
+          length: 16,
+          required: true
+        }
       }
     }
   }
