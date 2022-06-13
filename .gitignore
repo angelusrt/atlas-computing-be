@@ -2,6 +2,7 @@
 
 # dependencies
 /atlas-computing
+/public
 /node_modules
 /.pnp
 .pnp.js

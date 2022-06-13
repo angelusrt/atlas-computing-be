@@ -10,6 +10,7 @@ const dotenv = require("dotenv")
 
 const dev = require("./routes/dev.js")
 const post = require("./routes/post.js")
+const image = require("./routes/image.js")
 
 const {addDev} = require("./functions/devfunc.js")
 const {addPost} = require("./functions/postfunc.js")
@@ -29,7 +30,7 @@ mongoose.connect(
   },
   () => {
     console.log("connected to db")
-    waitInput()
+    //waitInput()
   }
 )
 
@@ -63,9 +64,10 @@ async function waitInput() {
 
 //Route Middleware
 app.use(express.json())
-app.use(cors())
+app.use(cors({origin: "*"}))
 app.use("/api/dev", dev)
 app.use("/api/post", post)
+app.use("/api/image", image)
 
 //Response
 app.get("/", (req, res) => {

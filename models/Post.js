@@ -44,6 +44,11 @@ const PostSchema = new Schema({
       paragraphs: {
         type: [{}],
         minlength: 1,
+        image:{
+          type: [String],
+          length: 32,
+          required: false
+        },
         text:{
           type: String,
           length: 512,
