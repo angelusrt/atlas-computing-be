@@ -27,39 +27,23 @@ const PostSchema = new Schema({
     length: 16,
     required: true
   },
-  title: {
-    type: String,
-    length: 64,
-    required: true
-  },
-  body: {
-    section: {
-      type: [{}],
+  content:{
+    type: [{}],
+    required: true,
+    language: {
+      type: String,
       required: true,
-      title: {
-        type: String,
-        length: 32,
-        required: true
-      },
-      paragraphs: {
-        type: [{}],
-        minlength: 1,
-        image:{
-          type: [String],
-          length: 32,
-          required: false
-        },
-        text:{
-          type: String,
-          length: 512,
-          required: true,
-        },
-        mode:{
-          type: String,
-          length: 16,
-          required: true
-        }
-      }
+      length: 32,
+      unique: true
+    },
+    title: {
+      type: String,
+      length: 64,
+      required: true
+    },
+    markdown: {
+      type: String,
+      required: true
     }
   }
 })

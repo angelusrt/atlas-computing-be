@@ -4,7 +4,7 @@ const Dev = require("../models/Dev.js")
 async function addPost(props) {
   try{
     //Resolving file directory
-    const postData = require(props)
+    const postData = require(`../files/${props}`)
     
     //Treating the data
     const user = await Dev.findById(postData.authorID)

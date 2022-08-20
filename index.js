@@ -30,7 +30,7 @@ mongoose.connect(
   },
   () => {
     console.log("connected to db")
-    //waitInput()
+    // waitInput()
   }
 )
 
@@ -47,8 +47,8 @@ async function waitInput() {
         waitInput()
         break;
       case "addPost":
-        addPost(path.join(process.cwd(), answer[1]))
-        console.log(`addPost ${path.join(process.cwd(), answer[1])}\n`)
+        addPost(answer[1]) //filename at /files
+        console.log(`addPost ${answer[1]}\n`)
         waitInput()
         break;
       default:

@@ -17,8 +17,6 @@ const _mime = {
 
 router.get('/:image', async (req, res) => {
   try {
-    console.log(_dir)
-
     const file = path.join(_dir, req.path)
     
     if (file.indexOf(_dir + path.sep) !== 0) 
