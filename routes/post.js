@@ -1,15 +1,6 @@
 const router = require("express").Router()
 const Post = require("../models/Post.js")
 
-//Test
-router.get("/", async(req, res) => {
-   try{
-     res.status(200).send("Yooo")
-   } catch(err){
-     res.status(400).json(err)
-   }
-})
-
 //Gets all Post
 router.get("/:lang", async(req, res) => {
   try{
@@ -45,11 +36,9 @@ router.get("/:lang", async(req, res) => {
 //Gets Post
 router.get("/:lang/:postID", async(req, res) => {
   try{
-    console.log(req)
     //Gets post
     const post = await Post.findById(req.params.postID)
 
-    console.log("post ", post)
     //Treats information
     const newPost = {
       date: post.date,
