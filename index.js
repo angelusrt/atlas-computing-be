@@ -2,6 +2,7 @@
 const readline = require("readline/promises")
 const {stdin, stdout} = require("process")
 const path = require("path")
+const https = require("https")
 
 const express = require("express")
 const mongoose = require("mongoose")
@@ -75,4 +76,7 @@ app.get("/", (req, res) => {
 })
 
 //Initiate server
-app.listen(process.env.PORT)
+https.createServer({
+  key: fs.readFileSync("key.pem"),
+  cert: fs.readFileSync("cert.pem"),
+}, app).listen(process.env.PORT);
