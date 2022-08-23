@@ -4,6 +4,7 @@
 /atlas-computing
 /public
 /node_modules
+/files
 /.pnp
 .pnp.js
 .index.js.swp

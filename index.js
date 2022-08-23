@@ -32,7 +32,7 @@ mongoose.connect(
   },
   () => {
     console.log("connected to db")
-    // waitInput()
+    waitInput()
   }
 )
 

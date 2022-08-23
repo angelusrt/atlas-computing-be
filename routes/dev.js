@@ -9,12 +9,12 @@ router.get("/", async (req, res) => {
 
     //Create About Object
     const about = {
-      about: `Culpa voluptate reprehenderit et 
-        labore laborum non ipsum quis nisi ad id 
-        est aliquip labore. Ut incididunt ea cillum 
-        labore. Voluptate non incididunt adipisicing 
-        velit laboris nostrud non proident voluptate qui 
-        anim incididunt nisi.`,
+      about: `AtlasComputing se trata de um blog tão como 
+        um projeto de desenvolvimento sobre programação, design, 
+        tecnologia e afins. Ele foi criado com o intuito de se 
+        desafiar a aprender diversos aspectos da tecnologia 
+        da informação assim como de vídeo-imagem. Tem como 
+        contribuintes, além de outros:`,
       dev
     }
     //Sends its
