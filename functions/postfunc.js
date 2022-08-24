@@ -7,7 +7,7 @@ async function addPost(props) {
 
     //Resolving file
     if(props[1] === "--inline"){
-      postData = props[2]
+      postData = JSON.parse(props[2])
     } else {
       postData = require(`../files/${props}`)
     }

@@ -39,28 +39,31 @@ mongoose.connect(
 //Admin Functions
 async function waitInput() {
   const r1 = readline.createInterface({input: stdin,output: stdout})
-  const answer = (await r1.question("Esperando por inputs:\n")).split(" ", 3)
+  let answer = await r1.question("Esperando por inputs:\n")
+  answer = [
+    answer.split(" ", 2)[0], 
+    answer.split(" ", 2)[1],
+    answer.replace(
+      answer.split(" ", 2)[0] + " " + answer.split(" ", 2)[1],
+      ""
+    ).slice(1)
+  ]
 
-  if(answer.length == 2) {
-    switch (answer[0]) {
-      case "addDev":
-        addDev(answer)
-        console.log(`addDev ${answer[1]}\n`)
-        waitInput()
-        break;
-      case "addPost":
-        addPost(answer) //filename at /files
-        console.log(`addPost ${answer[1]}\n`)
-        waitInput()
-        break;
-      default:
-        console.log("Input invalido")
-        waitInput()
-        break;
-    }
-  } else{
-    console.log("Input invalido, argumento toma 2 entradas")
-    waitInput()
+  switch (answer[0]) {
+    case "addDev":
+      addDev(answer)
+      console.log(`addDev ${answer[1]}\n`)
+      waitInput()
+      break;
+    case "addPost":
+      addPost(answer) //filename at /files
+      console.log(`addPost ${answer[1]}\n`)
+      waitInput()
+      break;
+    default:
+      console.log("Input invalido")
+      waitInput()
+      break;
   }
 }
 

@@ -6,7 +6,7 @@ function addDev(props) {
 
     //Resolving file directory
     if(props[1] === "--inline"){
-      devData = props[2]
+      devData = JSON.parse(props[2])
     } else {
       devData = require(`../files/${props}`)
     }
