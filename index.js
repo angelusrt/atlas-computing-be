@@ -38,17 +38,17 @@ mongoose.connect(
 //Admin Functions
 async function waitInput() {
   const r1 = readline.createInterface({input: stdin,output: stdout})
-  const answer = (await r1.question("Esperando por inputs:\n")).split(" ")  
+  const answer = (await r1.question("Esperando por inputs:\n")).split(" ", 3)
 
   if(answer.length == 2) {
     switch (answer[0]) {
       case "addDev":
-        addDev(path.join(process.cwd(), answer[1]))
-        console.log(`addDev ${path.join(process.cwd(), answer[1])}\n`)
+        addDev(answer)
+        console.log(`addDev ${answer[1]}\n`)
         waitInput()
         break;
       case "addPost":
-        addPost(answer[1]) //filename at /files
+        addPost(answer) //filename at /files
         console.log(`addPost ${answer[1]}\n`)
         waitInput()
         break;

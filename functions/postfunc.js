@@ -3,8 +3,14 @@ const Dev = require("../models/Dev.js")
 
 async function addPost(props) {
   try{
-    //Resolving file directory
-    const postData = require(`../files/${props}`)
+    let postData
+
+    //Resolving file
+    if(props[1] === "--inline"){
+      postData = props[2]
+    } else {
+      postData = require(`../files/${props}`)
+    }
     
     //Treating the data
     const user = await Dev.findById(postData.authorID)
