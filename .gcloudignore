@@ -13,5 +13,8 @@
 .git
 .gitignore
 
+# Dependencies:
+/atlas-computing
+
 # Node.js dependencies:
 node_modules/
