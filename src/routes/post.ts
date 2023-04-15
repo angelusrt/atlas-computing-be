@@ -22,6 +22,8 @@ router.post("/", async (req: Req<PostReqType>, res) => {
         .catch(err => res.status(400).json(err).send("Tag not created"))
     })
 
+    
+
     await Content.create({ language, title, markdown, postId })
       .catch(err => res.status(400).json(err).send("Content not created"))
   }

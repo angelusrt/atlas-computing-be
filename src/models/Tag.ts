@@ -24,7 +24,7 @@ const tagAttributes = {
       key: 'id',
     },
   },
-  name: { type: new STRING(16), allowNull: false, unique: true }
+  name: { type: new STRING(16), allowNull: false }
 }
 
 Tag.init(

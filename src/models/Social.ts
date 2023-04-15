@@ -6,7 +6,6 @@ const { INTEGER, STRING } = DataTypes
 class Social extends Model {
   declare id: number
   declare name: string
-  declare icon: string
   declare link: string
   declare devId: number
 }
@@ -27,7 +26,6 @@ const socialAttributes = {
     },
   },
   name: { type: new STRING(16), allowNull: false },
-  icon: { type: new STRING(16), allowNull: false },
   link: { type: new STRING(64), allowNull: false },
 }
 

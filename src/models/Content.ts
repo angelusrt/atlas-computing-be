@@ -1,7 +1,7 @@
 import { DataTypes, Model } from "sequelize"
 import db from "../config/database"
 
-const { INTEGER, STRING } = DataTypes
+const { INTEGER, STRING, TEXT } = DataTypes
 
 class Content extends Model {
   declare id: number
@@ -28,9 +28,15 @@ const contentAttributes = {
   },
   language: { type: new STRING(5), allowNull: false, unique: true },
   title: { type: new STRING(64), allowNull: false },
-  markdown: { type: new STRING(), allowNull: false }
+  markdown: { 
+    type: TEXT, 
+    allowNull: false
+  }
 }
 
-Content.init(contentAttributes, { sequelize: db, tableName: "contents" })
+Content.init(
+  contentAttributes, 
+  { sequelize: db, tableName: "contents", charset: "utf8mb4", collate: "utf8mb4_unicode_ci" }
+)
 
 export default Content

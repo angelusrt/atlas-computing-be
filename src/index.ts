@@ -6,6 +6,9 @@ import user from "./routes/user"
 import dev from "./routes/dev"
 import post from "./routes/post"
 
+import https from "node:https"
+import fs from "node:fs"
+
 import database from "./config/database"
 
 dotenv.config()
@@ -29,4 +32,9 @@ app.use("/api/post", post)
 
 app.get("/", (req, res) => res.send("We are on home"))
 
-app.listen(process.env.PORT)
+//app.listen(process.env.PORT)
+
+https.createServer({
+  key: fs.readFileSync(process.env.KEY),
+  cert: fs.readFileSync(process.env.CERT),
+}, app).listen(process.env.PORT)
