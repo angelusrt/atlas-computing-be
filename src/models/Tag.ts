@@ -1,35 +1,28 @@
-import { DataTypes, Model } from "sequelize"
-import db from "../config/database"
+import { Database, Table } from "../utils/utils"
 
-const { INTEGER, STRING } = DataTypes
-
-class Tag extends Model {
-  declare id: number
-  declare name: string
-  declare postId: number
+type TagType = {
+  id: number,
+  name: string,
+  postId: string
 }
 
-const tagAttributes = {
-  id: {
-    primaryKey: true,
-    default: 0,
-    type: INTEGER.UNSIGNED,
-    autoIncrement: true
-  },
-  postId: {
-    type: INTEGER.UNSIGNED,
-    allowNull: false,
-    references: {
-      model: "posts",
-      key: 'id',
-    },
-  },
-  name: { type: new STRING(16), allowNull: false }
+const tagSchema = (table: Table) => {
+  table.increments("id").unsigned().primary().notNullable()
+  table.string("name", 16).notNullable()
+  table.integer("postId").unsigned().notNullable()
+  table.foreign("postId").references("posts.id")
 }
 
-Tag.init(
-  tagAttributes, 
-  { sequelize: db, tableName: "tags", timestamps: false }
-)
+async function createTags(database: Database) {
+  await database.schema.hasTable("tags").then(async exists => {
+    if(exists) return undefined
 
-export default Tag
+    await database.schema
+      .createTable('tags', tagSchema)
+      .then(() => console.log("Table tags created"))
+      .catch((err) => console.log("Table tags not created", err))
+  })
+}
+
+export type { TagType }
+export { createTags }

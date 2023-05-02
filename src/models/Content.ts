@@ -1,42 +1,32 @@
-import { DataTypes, Model } from "sequelize"
-import db from "../config/database"
+import { Database, Table } from "../utils/utils"
 
-const { INTEGER, STRING, TEXT } = DataTypes
-
-class Content extends Model {
-  declare id: number
-  declare postId: number
-  declare language: string
-  declare title: string
-  declare markdown: string
+type ContentType = {
+  id: number,
+  postId: number,
+  title: string
+  language: string,
+  markdown: string,
 }
 
-const contentAttributes = {
-  id: {
-    primaryKey: true,
-    default: 0,
-    type: INTEGER.UNSIGNED,
-    autoIncrement: true
-  },
-  postId: {
-    type: INTEGER.UNSIGNED,
-    allowNull: false,
-    references: {
-      model: 'posts',
-      key: 'id',
-    },
-  },
-  language: { type: new STRING(5), allowNull: false, unique: true },
-  title: { type: new STRING(64), allowNull: false },
-  markdown: { 
-    type: TEXT, 
-    allowNull: false
-  }
+const contentSchema = (table: Table) => {
+  table.increments("id").unsigned().primary().notNullable()
+  table.string("title", 64).notNullable()
+  table.string("language", 5).unique().notNullable()
+  table.text("markdown").notNullable()
+  table.integer("postId").unsigned().notNullable()
+  table.foreign("postId").references("posts.id")
 }
 
-Content.init(
-  contentAttributes, 
-  { sequelize: db, tableName: "contents", charset: "utf8mb4", collate: "utf8mb4_unicode_ci" }
-)
+async function createContents(database: Database) {
+  await database.schema.hasTable("contents").then(async exists => {
+    if(exists) return undefined
 
-export default Content
+    await database.schema
+      .createTable('contents', contentSchema)
+      .then(() => console.log("Table contents created"))
+      .catch((err) => console.log("Table contents not created", err))
+  })
+}
+
+export type { ContentType }
+export { createContents }

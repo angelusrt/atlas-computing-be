@@ -1,13 +1,8 @@
-import dotenv from "dotenv"
 import { Router } from "express"
+import { DevType } from "../models/Dev"
+import { SocialType } from "../models/Social"
+import database from "../config/database"
 
-import Dev, { DevReqType } from "../models/Dev"
-import Social from "../models/Social"
-import { Req } from "../utils/utils"
-
-dotenv.config()
-
-const router = Router()
 
 const about = `AtlasComputing se trata de um blog tão como 
   um projeto de desenvolvimento sobre programação, design, 
@@ -16,29 +11,41 @@ const about = `AtlasComputing se trata de um blog tão como
   da informação assim como de vídeo-imagem. Tem como 
   contribuintes, além de outros:`
 
-router.post("/", async (req: Req<DevReqType>, res) => {
-  const { description, email, name, telephone, password, socials } = req.body
-  
+async function createTable(devId: number, body: any) {
+  body.socials.map((social: any) => social.devId = devId)
+
+  await database<SocialType>("socials")
+    .insert(body.socials)
+    .catch(err => {throw err})
+}
+
+
+const router = Router()
+
+router.post("/", async (req, res) => {
+  const { description, email, name, telephone, password } = req.body
+
   if (password !== process.env.PASSWORD)
     res.status(401).send("not authorized")
 
-  async function createSocials(devId: number) {
-    socials.map(async (e, i) => {
-      const { icon, link, name } = e
-
-      await Social.create({ icon, link, name, devId: devId})
-        .catch(err => res.status(400).send("Socials not created").json(err))
-    })
-  }
-
-  Dev.create({ name, description, email, telephone })
-    .then(dev => createSocials(dev.id).then(() => res.status(200).send("Dev created")))
-    .catch(err => res.status(400).send("Dev not created").json(err))
+  await database<DevType>("devs")
+    .insert({ name, description, email, telephone })
+    .then(async data => 
+      await createTable(data[0], req.body)
+        .then(() => res.status(200).send("Dev created"))
+        .catch(err => res.status(400).json(err))
+    ).catch(err => res.status(400).json(err))
 })
 
 router.get("/", async (req, res) => {
-  await Dev.findAll({ include: {model: Social, as: "socials", foreignKey: "devId"}})
-    .then(data => res.json({ about, data }))
+  const social = '"id", socials.id, "name", socials.name, "link", socials.link'
+  const socials = database.raw(`JSON_ARRAYAGG(JSON_OBJECT(${social})) as socials`)
+
+  await database<DevType>("devs")
+    .select("devs.name as name", "description", "email", "telephone", socials)
+    .join("socials", "devs.id", "socials.devId")
+    .groupBy("devs.id")
+    .then(data => res.status(200).json({ about, data }))
     .catch(err => res.status(400).json(err))
 })
 

@@ -1,53 +1,31 @@
-import { DataTypes, Model } from "sequelize"
-import db from "../config/database"
-import Post from "./Post"
-import Social from "./Social"
+import { Database, Table } from "../utils/utils"
 
-const { INTEGER, STRING } = DataTypes
-
-type DevReqType = {
+type DevType = {
+  id: number,
   name: string,
   description: string,
   email: string,
   telephone: string,
-  socials: { name: string, icon: string, link: string }[],
-  password: string
 }
 
-class Dev extends Model {
-  declare id: number
-  declare name: string
-  declare description: string
-  declare email: string
-  declare telephone: string
-
-  public getPosts!: () => Promise<Post[]>
-  public getSocials!: () => Promise<Social[]>
+const devSchema = (table: Table) => {
+  table.increments("id").unsigned().primary().notNullable()
+  table.string("name", 32).notNullable().unique()
+  table.string("description", 64).notNullable()
+  table.string("email", 32).notNullable()
+  table.string("telephone", 16).notNullable()
 }
 
-const devAttributes = {
-  id: {
-    primaryKey: true,
-    type: INTEGER.UNSIGNED,
-    default: 0,
-    autoIncrement: true
-  },
-  name: { type: new STRING(32), allowNull: false, unique: true },
-  description: { type: new STRING(64), allowNull: false },
-  email: { type: new STRING(32), allowNull: false },
-  telephone: { type: new STRING(16), allowNull: false },
+async function createDevs(database: Database) {
+  await database.schema.hasTable("devs").then(async exists => {
+    if(exists) return undefined
+    
+    await database.schema
+      .createTable('devs', devSchema)
+      .then(() => console.log("Table devs created"))
+      .catch((err) => console.log("Table devs not created", err))
+  })
 }
 
-Dev.init(devAttributes, { sequelize: db, tableName: "devs" })
-
-Dev.hasMany(
-  Social,
-  { onDelete: "CASCADE", foreignKey: "devId", as: "socials" }
-)
-Dev.hasMany(
-  Post,
-  { onDelete: "CASCADE", foreignKey: "devId", as: "posts" }
-)
-
-export type {DevReqType}
-export default Dev
+export { createDevs }
+export type { DevType }

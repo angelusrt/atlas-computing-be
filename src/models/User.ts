@@ -1,17 +1,4 @@
-import { DataTypes, Model } from "sequelize"
-import db from "../config/database"
-import Rating from "./Rating"
-
-const { INTEGER, ENUM, STRING } = DataTypes
-
-type UserReqType = {
-  name: string,
-  favAnimal: FavAnimalEnum,
-  continent: ContinentEnum,
-  currentMood: MoodEnum,
-  globalismOpnion: MoodEnum,
-  warmingOpnion: MoodEnum
-}
+import { Database, Table } from "../utils/utils"
 
 enum FavAnimalEnum { Dog, Cat, Lion, Wolf, Bear, Horse, Pig, Cow }
 enum ContinentEnum { SouthAmerica, NorthAmerica, Europe, Asia, Oceania, Africa }
@@ -21,35 +8,54 @@ const favAnimals = ["Dog", "Cat", "Lion", "Wolf", "Bear", "Horse", "Pig", "Cow"]
 const continents = ["SouthAmerica", "NorthAmerica", "Europe", "Asia", "Oceania", "Africa"]
 const moods = ["VeryGood", "Good", "Normal", "Bad", "VeryBad"]
 
-class User extends Model {
-  declare id: number
-  declare name: string
-  declare favAnimal: FavAnimalEnum
-  declare continent: ContinentEnum
-  declare currentMood: MoodEnum
-  declare globalismOpnion: MoodEnum
-  declare warmingOpnion: MoodEnum
-  declare ratingsId: number
+const favAnimalsPT = ["Cachorro", "Gato", "Leão", "Lobo", "Urso", "Cavalo", "Porco", "Vaca"]
+const continentsPT = ["America do Sul", "America do Norte", "Europa", "Asia", "Oceania", "Africa"]
+const moodsPT = ["Ótimo", "Bom", "Normal", "Ruim", "Péssimo"]
 
-  public getRatings!: () => Promise<Rating[]>
+type UserType = {
+  id: number,
+  name: string,
+  continent: ContinentEnum,
+  favAnimal: FavAnimalEnum,
+  mood: MoodEnum,
+  globalWarming: MoodEnum
+  globalism: MoodEnum,
 }
 
-User.init({
-  id: {
-    type: INTEGER.UNSIGNED,
-    primaryKey: true,
-    autoIncrement: true,
-    allowNull: false
-  },
-  name: { type: new STRING(16), allowNull: false },
-  favAnimal: { type: new ENUM(...favAnimals), allowNull: false },
-  continent: { type: new ENUM(...continents), allowNull: false },
-  currentMood: { type: new ENUM(...moods), allowNull: false },
-  globalismOpnion: { type: new ENUM(...moods), allowNull: false },
-  warmingOpnion: { type: new ENUM(...moods), allowNull: false }
-}, { sequelize: db, tableName: "users" })
+type IdentityType = Pick<UserType, "name" | "continent" | "favAnimal">
+type SensationType = Pick<UserType, "mood" | "globalWarming" | "globalism">
 
-User.hasMany(Rating, { onDelete: "CASCADE", foreignKey: "userId", as: "ratings" })
+const userSchema = (table: Table) => {
+  table.increments("id").unsigned().primary().notNullable()
+  table.string("name", 16).notNullable()
+  table.enum("favAnimal", favAnimals).notNullable()
+  table.enum("continent", continents).notNullable()
+  table.enum("mood", moods).notNullable()
+  table.enum("globalism", moods).notNullable()
+  table.enum("globalWarming", moods).notNullable()
+}
 
-export type { UserReqType }
-export default User
+async function createUser(database: Database) {
+  await database.schema.hasTable("users").then(async exists => {
+    if(exists) return undefined
+    
+    await database.schema
+      .createTable('users', userSchema)
+      .then(() => console.log("Table users created"))
+      .catch((err) => console.log("Table users not created", err))
+  })
+}
+
+export { 
+  FavAnimalEnum,
+  ContinentEnum,
+  MoodEnum,
+  favAnimals,
+  continents,
+  moods,
+  favAnimalsPT,
+  continentsPT,
+  moodsPT,
+  createUser, 
+}
+export type { UserType, IdentityType, SensationType }

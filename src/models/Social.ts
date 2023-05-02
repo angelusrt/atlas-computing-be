@@ -1,37 +1,30 @@
-import { DataTypes, Model } from "sequelize"
-import db from "../config/database"
+import { Database, Table } from "../utils/utils"
 
-const { INTEGER, STRING } = DataTypes
-
-class Social extends Model {
-  declare id: number
-  declare name: string
-  declare link: string
-  declare devId: number
+type SocialType = {
+  id: number,
+  name: string,
+  link: string,
+  devId: string
 }
 
-const socialAttributes = {
-  id: {
-    primaryKey: true,
-    default: 0,
-    type: INTEGER.UNSIGNED,
-    autoIncrement: true
-  },
-  devId: {
-    type: INTEGER.UNSIGNED,
-    allowNull: false,
-    references: {
-      model: 'devs',
-      key: 'id',
-    },
-  },
-  name: { type: new STRING(16), allowNull: false },
-  link: { type: new STRING(64), allowNull: false },
+const socialSchema = (table: Table) => {
+  table.increments("id").unsigned().primary().notNullable()
+  table.string("name", 16).notNullable()
+  table.string("link", 64).notNullable()
+  table.integer("devId").unsigned().notNullable()
+  table.foreign("devId").references("devs.id")
 }
 
-Social.init(
-  socialAttributes, 
-  { sequelize: db, tableName: "socials", timestamps: false }
-)
+async function createSocials(database: Database) {
+  await database.schema.hasTable("socials").then(async exists => {
+    if(exists) return undefined
 
-export default Social
+    await database.schema
+      .createTable('socials', socialSchema)
+      .then(() => console.log("Table socials created"))
+      .catch((err) => console.log("Table socials not created", err))
+  })
+}
+
+export type { SocialType }
+export { createSocials }
