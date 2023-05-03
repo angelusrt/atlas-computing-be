@@ -11,7 +11,7 @@ type ContentType = {
 const contentSchema = (table: Table) => {
   table.increments("id").unsigned().primary().notNullable()
   table.string("title", 64).notNullable()
-  table.string("language", 5).unique().notNullable()
+  table.string("language", 5).notNullable()
   table.text("markdown").notNullable()
   table.integer("postId").unsigned().notNullable()
   table.foreign("postId").references("posts.id")
