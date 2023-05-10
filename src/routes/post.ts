@@ -41,11 +41,8 @@ router.get("/:language", async (req, res) => {
   const tag = '"id", tags.id, "name", tags.name'
   const tags = getAgg("tags", tag)
 
-  const content = '"title", contents.title'
-  const contents = getAgg("contents", content)
-
   await database<PostType>("posts")
-    .select("date", "posts.id as id", tags, contents)
+    .select("date", "posts.id as id", tags, "contents.title as title")
     .join("tags", "posts.id", "tags.postId")
     .join("contents", "posts.id", "contents.postId")
     .where({"contents.language": req.params.language})
@@ -60,17 +57,14 @@ router.get("/:language/:postId", async (req, res) => {
   const tag = '"id", tags.id, "name", tags.name'
   const tags = getAgg("tags", tag)
 
-  const content = '"title", contents.title, "markdown", contents.markdown'
-  const contents = getAgg("contents", content)
-
-  const dev = '"name", devs.name, "description", devs.description'
-  const devs = getAgg("devs", dev)
-
   const where = {"contents.language": language, "posts.id": postId}
 
   await database<PostType>("posts")
-    .select("date", "posts.id as id", tags, contents, devs)
-    .join("tags", "posts.id", "tags.postId")
+    .select(
+      "date", "posts.id as id", tags, 
+      "contents.title as title", "contents.markdown as markdown",
+      "devs.name as name", "devs.description as description"
+    ).join("tags", "posts.id", "tags.postId")
     .join("contents", "posts.id", "contents.postId")
     .join("devs", "devId", "devs.id")
     .where(where)
