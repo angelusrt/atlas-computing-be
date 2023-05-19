@@ -8,7 +8,7 @@ import cors from "cors"
 import dev from "./routes/dev"
 import post from "./routes/post"
 import user from "./routes/user"
-
+import contact from "./routes/contact"
 
 import { createDevs } from "./models/Dev"
 import { createSocials } from "./models/Social"
@@ -16,6 +16,7 @@ import { createTags } from "./models/Tag"
 import { createPosts } from "./models/Post"
 import { createContents } from "./models/Content"
 import { createUser } from "./models/User"
+
 import database from "./config/database"
 
 (async function (){
@@ -37,6 +38,7 @@ import database from "./config/database"
   app.use("/api/dev", dev)
   app.use("/api/post", post)
   app.use("/api/user", user)
+  app.use("/api/contact", contact)
 
   app.get("/", (req, res) => res.send("We are on home"))
 
