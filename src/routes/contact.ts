@@ -1,10 +1,20 @@
-import { Router } from "express"
+import { Request, Router } from "express"
 import nodemailer from "nodemailer"
 
 const router = Router()
 
-router.post("/", async (req, res) => {
+type ContactType = {
+  email: string,
+  message: string
+}
+
+type PostType = Request<{}, any, ContactType>
+
+router.post("/", async (req: PostType, res) => {
   const {email, message} = req.body
+
+  if(email.length < 5 || message.length === 0)
+    res.send(400).json('fail')
 
   const smtp = nodemailer.createTransport({
     host: "smtp.gmail.com",
