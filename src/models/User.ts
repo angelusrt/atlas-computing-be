@@ -1,16 +1,15 @@
-import { Database, Table } from "../utils/utils"
+import { Database, Table } from "../utils/types"
 
 enum FavAnimalEnum { Dog, Cat, Lion, Wolf, Bear, Horse, Pig, Cow }
 enum ContinentEnum { SouthAmerica, NorthAmerica, Europe, Asia, Oceania, Africa }
 enum MoodEnum { VeryGood, Good, Normal, Bad, VeryBad }
 
-const favAnimals = ["Dog", "Cat", "Lion", "Wolf", "Bear", "Horse", "Pig", "Cow"]
-const continents = ["SouthAmerica", "NorthAmerica", "Europe", "Asia", "Oceania", "Africa"]
-const moods = ["VeryGood", "Good", "Normal", "Bad", "VeryBad"]
-
-const favAnimalsPT = ["Cachorro", "Gato", "Leão", "Lobo", "Urso", "Cavalo", "Porco", "Vaca"]
-const continentsPT = ["America do Sul", "America do Norte", "Europa", "Asia", "Oceania", "Africa"]
-const moodsPT = ["Ótimo", "Bom", "Normal", "Ruim", "Péssimo"]
+const userTypes = [
+  [""],
+  ["SouthAmerica", "NorthAmerica", "Europe", "Asia", "Oceania", "Africa"],
+  ["Dog", "Cat", "Lion", "Wolf", "Bear", "Horse", "Pig", "Cow"],
+  ["VeryGood", "Good", "Normal", "Bad", "VeryBad"]
+]
 
 type UserType = {
   id: number,
@@ -22,17 +21,14 @@ type UserType = {
   globalism: MoodEnum,
 }
 
-type IdentityType = Pick<UserType, "name" | "continent" | "favAnimal">
-type SensationType = Pick<UserType, "mood" | "globalWarming" | "globalism">
-
 const userSchema = (table: Table) => {
   table.increments("id").unsigned().primary().notNullable()
   table.string("name", 16).notNullable()
-  table.enum("favAnimal", favAnimals).notNullable()
-  table.enum("continent", continents).notNullable()
-  table.enum("mood", moods).notNullable()
-  table.enum("globalism", moods).notNullable()
-  table.enum("globalWarming", moods).notNullable()
+  table.enum("continent", userTypes[1]).notNullable()
+  table.enum("favAnimal", userTypes[2]).notNullable()
+  table.enum("mood", userTypes[3]).notNullable()
+  table.enum("globalism", userTypes[3]).notNullable()
+  table.enum("globalWarming", userTypes[3]).notNullable()
 }
 
 async function createUser(database: Database) {
@@ -46,16 +42,5 @@ async function createUser(database: Database) {
   })
 }
 
-export { 
-  FavAnimalEnum,
-  ContinentEnum,
-  MoodEnum,
-  favAnimals,
-  continents,
-  moods,
-  favAnimalsPT,
-  continentsPT,
-  moodsPT,
-  createUser, 
-}
-export type { UserType, IdentityType, SensationType }
+export { userTypes, createUser }
+export type { UserType }

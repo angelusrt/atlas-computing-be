@@ -1,4 +1,4 @@
-import { Database, Table } from "../utils/utils"
+import { Database, Table } from "../utils/types"
 
 type ContentType = {
   id: number,
