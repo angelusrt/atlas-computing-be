@@ -15,6 +15,7 @@ index.js.save
 
 # production
 /build
+/dist
 
 # misc
 .DS_Store

@@ -3,14 +3,6 @@ import { DevType } from "../models/Dev"
 import { SocialType } from "../models/Social"
 import database from "../config/database"
 
-
-const about = `AtlasComputing se trata de um blog tão como 
-  um projeto de desenvolvimento sobre programação, design, 
-  tecnologia e afins. Ele foi criado com o intuito de se 
-  desafiar a aprender diversos aspectos da tecnologia 
-  da informação assim como de vídeo-imagem. Tem como 
-  contribuintes, além de outros:`
-
 async function createTable(devId: number, body: any) {
   body.socials.map((social: any) => social.devId = devId)
 
@@ -45,7 +37,7 @@ router.get("/", async (req, res) => {
     .select("devs.name as name", "description", "email", "telephone", socials)
     .join("socials", "devs.id", "socials.devId")
     .groupBy("devs.id")
-    .then(data => res.status(200).json({ about, data }))
+    .then(data => res.status(200).json({ data }))
     .catch(err => res.status(400).json(err))
 })
 

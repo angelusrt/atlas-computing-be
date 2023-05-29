@@ -3,14 +3,14 @@ import { Database, Table } from "../utils/types"
 type TagType = {
   id: number,
   name: string,
-  postId: string
+  contentId: string
 }
 
 const tagSchema = (table: Table) => {
   table.increments("id").unsigned().primary().notNullable()
   table.string("name", 16).notNullable()
-  table.integer("postId").unsigned().notNullable()
-  table.foreign("postId").references("posts.id")
+  table.integer("contentId").unsigned().notNullable()
+  table.foreign("contentId").references("contents.id")
 }
 
 async function createTags(database: Database) {
